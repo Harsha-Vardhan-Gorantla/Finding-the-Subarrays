@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+	int n;
+	cin >> n;
+	int a[n+1];
+	a[0] = 0;
+	for(int i = 1; i < n + 1; i++)
+	{
+		cin >> a[i];
+	}
+	double sum[n];
+	sum[0] = a[0];
+	for(int i = 1; i < n + 1; i++)
+	{
+		sum[i] = sum[i-1] + a[i];
+	}
+	vector <pair <int, int>> p;
+	int start, end, length;
+	double in, l;
+	for(int i = 1; i < n+1; i++)
+	{
+		start = i-1;
+		end = i;
+		while(end < n+1)
+		{
+			length = end - start;
+			in = sum[end] - sum[start];
+			if(n != length)
+			{
+				l = (sum[n] - in)/(n - length);
+			}
+			else
+			{
+				l = 0;
+			}
+			if( in / length > l)
+			{
+				p.push_back(make_pair(start+1,end));
+			}
+			end++;
+		}
+	}
+	sort(p.begin(), p.end());
+	cout << p.size() << "\n";
+	for(int i = 0; i < p.size(); i++)
+	{
+		cout << p[i].first << " " << p[i].second << "\n";
+	}
+}
